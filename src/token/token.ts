@@ -29,6 +29,19 @@ const RBRACE: TokenType = "}";
 const FUNCTION: TokenType = "FUNCTION";
 const LET: TokenType = "LET";
 
+const keywords: Record<string, TokenType> = {
+    fn: FUNCTION,
+    let: LET,
+};
+
+function LookupIdent(ident: string): TokenType {
+    const tok = keywords[ident];
+    if (tok) {
+        return tok;
+    }
+    return IDENT;
+}
+
 export {
     ILLEGAL,
     EOF,

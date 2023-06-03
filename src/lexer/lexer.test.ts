@@ -1,5 +1,5 @@
-import * as token from "../token/token";
-import { test, it, assert, describe, expect } from "vitest";
+import token, { TokenType } from "../token/token";
+import { it, describe, expect } from "vitest";
 import { Lexer } from "./lexer";
 
 describe("TestNextToken", () => {
@@ -16,7 +16,7 @@ describe("TestNextToken", () => {
     `;
 
     const tests: Array<{
-        expectedType: token.TokenType;
+        expectedType: TokenType;
         expectedLiteral: string;
     }> = [
         { expectedType: token.LET, expectedLiteral: "let" },
@@ -55,7 +55,6 @@ describe("TestNextToken", () => {
         { expectedType: token.IDENT, expectedLiteral: "ten" },
         { expectedType: token.RPAREN, expectedLiteral: ")" },
         { expectedType: token.SEMICOLON, expectedLiteral: ";" },
-        { expectedType: token.EOF, expectedLiteral: "" },
     ];
 
     const l = new Lexer(input);

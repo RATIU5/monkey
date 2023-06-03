@@ -1,4 +1,4 @@
-import * as token from "../token/token";
+import token, { Token, TokenType } from "../token/token";
 
 export class Lexer {
     input: string;
@@ -25,8 +25,8 @@ export class Lexer {
         this.readPosition += 1;
     }
 
-    NextToken(): token.Token {
-        let tok: token.Token | null = null;
+    NextToken(): Token {
+        let tok: Token;
 
         this.SkipWhitespace();
 
@@ -104,7 +104,7 @@ export class Lexer {
         return "0" <= ch && ch <= "9";
     }
 
-    NewToken(tokenType: token.TokenType, ch: string): token.Token {
+    NewToken(tokenType: TokenType, ch: string): Token {
         return { Type: tokenType, Literal: ch };
     }
 

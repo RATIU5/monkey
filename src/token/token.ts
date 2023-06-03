@@ -5,33 +5,35 @@ type Token = {
     Literal: string;
 };
 
-const ILLEGAL: TokenType = "ILLEGAL";
-const EOF: TokenType = "EOF";
+const Tokens = {
+    ILLEGAL: "ILLEGAL",
+    EOF: "EOF",
 
-// Identifiers + literals
-const IDENT: TokenType = "IDENT"; // add, foobar, x, y, ...
-const INT: TokenType = "INT"; // 1343456
+    // Identifiers + literals
+    IDENT: "IDENT", // add, foobar, x, y, ...
+    INT: "INT", // 1343456
 
-// Operators
-const ASSIGN: TokenType = "=";
-const PLUS: TokenType = "+";
+    // Operators
+    ASSIGN: "=",
+    PLUS: "+",
 
-// Delimiters
-const COMMA: TokenType = ",";
-const SEMICOLON: TokenType = ";";
+    // Delimiters
+    COMMA: ",",
+    SEMICOLON: ";",
 
-const LPAREN: TokenType = "(";
-const RPAREN: TokenType = ")";
-const LBRACE: TokenType = "{";
-const RBRACE: TokenType = "}";
+    LPAREN: "(",
+    RPAREN: ")",
+    LBRACE: "{",
+    RBRACE: "}",
 
-// Keywords
-const FUNCTION: TokenType = "FUNCTION";
-const LET: TokenType = "LET";
+    // Keywords
+    FUNCTION: "FUNCTION",
+    LET: "LET",
+};
 
 const keywords: Record<string, TokenType> = {
-    fn: FUNCTION,
-    let: LET,
+    fn: Tokens.FUNCTION,
+    let: Tokens.LET,
 };
 
 function LookupIdent(ident: string): TokenType {
@@ -39,25 +41,8 @@ function LookupIdent(ident: string): TokenType {
     if (tok) {
         return tok;
     }
-    return IDENT;
+    return Tokens.IDENT;
 }
 
-export {
-    ILLEGAL,
-    EOF,
-    IDENT,
-    INT,
-    ASSIGN,
-    PLUS,
-    COMMA,
-    SEMICOLON,
-    LPAREN,
-    RPAREN,
-    LBRACE,
-    RBRACE,
-    FUNCTION,
-    LET,
-    LookupIdent,
-};
-
+export default { ...Tokens, keywords, LookupIdent };
 export type { TokenType, Token };

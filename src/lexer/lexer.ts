@@ -1,73 +1,91 @@
-import * as token from '../token/token';
+import * as token from "../token/token";
 
 export class Lexer {
     input: string;
     position: number;
     readPosition: number;
-    ch: string | null;
+    ch: string;
 
-    constructor(input: string) {  
+    constructor(input: string) {
         this.readPosition = 0;
         this.position = 0;
-        this.ch = null;
+        this.ch = "";
         this.input = input;
-        this.readChar();
+        this.ReadChar();
     }
 
-    readChar(): void {
+    ReadChar(): void {
         if (this.readPosition >= this.input.length) {
-            this.ch = null;
+            this.ch = "";
         } else {
             this.ch = this.input[this.readPosition];
         }
 
         this.position = this.readPosition;
         this.readPosition += 1;
-    } 
+    }
 
     NextToken(): token.Token {
         let tok: token.Token | null = null;
 
         switch (this.ch) {
             case "=":
-                tok = this.newToken(token.ASSIGN, this.ch);
+                tok = this.NewToken(token.ASSIGN, this.ch);
                 break;
             case ";":
-                tok = this.newToken(token.SEMICOLON, this.ch);
+                tok = this.NewToken(token.SEMICOLON, this.ch);
                 break;
             case "(":
-                tok = this.newToken(token.LPAREN, this.ch);
+                tok = this.NewToken(token.LPAREN, this.ch);
                 break;
             case ")":
-                tok = this.newToken(token.RPAREN, this.ch);
+                tok = this.NewToken(token.RPAREN, this.ch);
                 break;
             case ",":
-                tok = this.newToken(token.COMMA, this.ch);
+                tok = this.NewToken(token.COMMA, this.ch);
                 break;
             case "+":
-                tok = this.newToken(token.PLUS, this.ch);
+                tok = this.NewToken(token.PLUS, this.ch);
                 break;
             case "{":
-                tok = this.newToken(token.LBRACE, this.ch);
+                tok = this.NewToken(token.LBRACE, this.ch);
                 break;
             case "}":
-                tok = this.newToken(token.RBRACE, this.ch);
+                tok = this.NewToken(token.RBRACE, this.ch);
                 break;
             case null:
-                tok = this.newToken(token.EOF, "");
+                tok = this.NewToken(token.EOF, "");
+                break;
+            default:
+                if (this.IsLetter(this.ch)) {
+                    tok = this.NewToken(token.ILLEGAL, "");
+                    tok.Literal = this.ReadIdentifier();
+                    return tok;
+                } else {
+                    tok = this.NewToken(token.ILLEGAL, "");
+                }
         }
 
-        this.readChar();
-
-        if (tok === null) {
-            tok = this.newToken(token.ILLEGAL, "");
-        }
+        this.ReadChar();
 
         return tok;
     }
 
-    newToken(tokenType: token.TokenType, ch: string): token.Token {
-        return {Type: tokenType, Literal: ch};
+    ReadIdentifier(): string {
+        const position = this.position;
+        while (this.IsLetter(this.ch)) {
+            this.ReadChar();
+        }
+        return this.input.slice(position, this.position);
     }
-        
+
+    IsLetter(ch: string): boolean {
+        return (
+            ("a" <= ch && ch <= "z") || ("A" <= ch && ch <= "Z") || ch === "_"
+        );
+    }
+
+    NewToken(tokenType: token.TokenType, ch: string): token.Token {
+        return { Type: tokenType, Literal: ch };
+    }
 }

@@ -57,6 +57,7 @@ export {
     RBRACE,
     FUNCTION,
     LET,
+    LookupIdent,
 };
 
 export type { TokenType, Token };

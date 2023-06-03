@@ -28,6 +28,8 @@ export class Lexer {
     NextToken(): token.Token {
         let tok: token.Token | null = null;
 
+        this.SkipWhitespace();
+
         switch (this.ch) {
             case "=":
                 tok = this.NewToken(token.ASSIGN, this.ch);
@@ -58,8 +60,9 @@ export class Lexer {
                 break;
             default:
                 if (this.IsLetter(this.ch)) {
-                    tok = this.NewToken(token.ILLEGAL, "");
-                    tok.Literal = this.ReadIdentifier();
+                    const literal = this.ReadIdentifier();
+                    const type = token.LookupIdent(literal);
+                    tok = this.NewToken(type, literal);
                     return tok;
                 } else {
                     tok = this.NewToken(token.ILLEGAL, "");
@@ -87,5 +90,16 @@ export class Lexer {
 
     NewToken(tokenType: token.TokenType, ch: string): token.Token {
         return { Type: tokenType, Literal: ch };
+    }
+
+    SkipWhitespace(): void {
+        while (
+            this.ch === " " ||
+            this.ch === "\t" ||
+            this.ch === "\n" ||
+            this.ch === "\r"
+        ) {
+            this.ReadChar();
+        }
     }
 }

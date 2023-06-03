@@ -1,10 +1,9 @@
 type TokenType = string;
 
 type Token = {
-    Type: TokenType,
-    Literal: string,
-}
-
+    Type: TokenType;
+    Literal: string;
+};
 
 const ILLEGAL: TokenType = "ILLEGAL";
 const EOF: TokenType = "EOF";
@@ -33,26 +32,18 @@ const LET: TokenType = "LET";
 export {
     ILLEGAL,
     EOF,
-
     IDENT,
     INT,
-    
     ASSIGN,
     PLUS,
-
     COMMA,
     SEMICOLON,
-
     LPAREN,
     RPAREN,
     LBRACE,
     RBRACE,
-
     FUNCTION,
     LET,
-}
+};
 
-export type {
-    TokenType,
-    Token,
-}
+export type { TokenType, Token };

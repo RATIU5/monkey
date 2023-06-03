@@ -1,8 +1,8 @@
 import * as token from "../token/token";
-import { test, it } from "vitest";
+import { test, it, assert, describe, expect } from "vitest";
 import { Lexer } from "./lexer";
 
-test("TestNextToken", () => {
+describe("TestNextToken", () => {
     const input: string = `let five = 5;
     let ten = 10;
   
@@ -11,6 +11,8 @@ test("TestNextToken", () => {
     };
   
     let result = add(five, ten);
+    !-/*5;
+    5 < 10 > 5;
     `;
 
     const tests: Array<{
@@ -62,18 +64,23 @@ test("TestNextToken", () => {
         const tt = tests[i];
         const tok = l.NextToken();
 
-        it(`test ${i}`, () => {
-            if (tok.Type !== tt.expectedType) {
-                throw new Error(
-                    `tests[${i}] - tokentype wrong. expected=${tt.expectedType}, got=${tok.Type}`
-                );
-            }
-
-            if (tok.Literal !== tt.expectedLiteral) {
-                throw new Error(
-                    `tests[${i}] - literal wrong. expected=${tt.expectedLiteral}, got=${tok.Literal}`
-                );
-            }
+        it(`checks expected type of ${tok.Type}`, () => {
+            expect(() => {
+                if (tok.Type !== tt.expectedType) {
+                    throw new Error(
+                        `tests[${i}] - tokentype wrong. expected=${tt.expectedType}, got=${tok.Type}`
+                    );
+                }
+            }).not.toThrow();
+        });
+        it(`checks expected literal`, () => {
+            expect(() => {
+                if (tok.Literal !== tt.expectedLiteral) {
+                    throw new Error(
+                        `tests[${i}] - literal wrong. expected=${tt.expectedLiteral}, got=${tok.Literal}`
+                    );
+                }
+            }).not.toThrow();
         });
     }
 });

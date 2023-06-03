@@ -64,6 +64,10 @@ export class Lexer {
                     const type = token.LookupIdent(literal);
                     tok = this.NewToken(type, literal);
                     return tok;
+                } else if (this.IsDigit(this.ch)) {
+                    const literal = this.ReadNumber();
+                    tok = this.NewToken(token.INT, literal);
+                    return tok;
                 } else {
                     tok = this.NewToken(token.ILLEGAL, "");
                 }
@@ -82,10 +86,22 @@ export class Lexer {
         return this.input.slice(position, this.position);
     }
 
+    ReadNumber(): string {
+        const position = this.position;
+        while (this.IsDigit(this.ch)) {
+            this.ReadChar();
+        }
+        return this.input.slice(position, this.position);
+    }
+
     IsLetter(ch: string): boolean {
         return (
             ("a" <= ch && ch <= "z") || ("A" <= ch && ch <= "Z") || ch === "_"
         );
+    }
+
+    IsDigit(ch: string): boolean {
+        return "0" <= ch && ch <= "9";
     }
 
     NewToken(tokenType: token.TokenType, ch: string): token.Token {

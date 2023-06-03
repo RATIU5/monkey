@@ -5,29 +5,30 @@ type Token = {
     Literal: string,
 }
 
-const ILLEGAL = "ILLEGAL";
-const EOF = "EOF";
+
+const ILLEGAL: TokenType = "ILLEGAL";
+const EOF: TokenType = "EOF";
 
 // Identifiers + literals
-const IDENT = "IDENT"; // add, foobar, x, y, ...
-const INT = "INT"; // 1343456
+const IDENT: TokenType = "IDENT"; // add, foobar, x, y, ...
+const INT: TokenType = "INT"; // 1343456
 
 // Operators
-const ASSIGN = "=";
-const PLUS = "+";
+const ASSIGN: TokenType = "=";
+const PLUS: TokenType = "+";
 
 // Delimiters
-const COMMA = ",";
-const SEMICOLON = ";";
+const COMMA: TokenType = ",";
+const SEMICOLON: TokenType = ";";
 
-const LPAREN = "(";
-const RPAREN = ")";
-const LBRACE = "{";
-const RBRACE = "}";
+const LPAREN: TokenType = "(";
+const RPAREN: TokenType = ")";
+const LBRACE: TokenType = "{";
+const RBRACE: TokenType = "}";
 
 // Keywords
-const FUNCTION = "FUNCTION";
-const LET = "LET";
+const FUNCTION: TokenType = "FUNCTION";
+const LET: TokenType = "LET";
 
 export {
     ILLEGAL,

@@ -13,6 +13,7 @@ describe("TestNextToken", () => {
     let result = add(five, ten);
     !-/*5;
     5 < 10 > 5;
+    #
     `;
 
     const tests: Array<{
@@ -72,7 +73,8 @@ describe("TestNextToken", () => {
                 }
             }).not.toThrow();
         });
-        it(`checks expected literal`, () => {
+
+        it(`checks expected literal of ${tok.Literal}`, () => {
             expect(() => {
                 if (tok.Literal !== tt.expectedLiteral) {
                     throw new Error(

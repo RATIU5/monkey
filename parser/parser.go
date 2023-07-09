@@ -60,6 +60,8 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 		return nil
 	}
 
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
 	// TODO skip expressions until semicolon
 	for !p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()

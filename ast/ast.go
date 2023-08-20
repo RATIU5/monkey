@@ -49,7 +49,6 @@ type LetStatement struct {
 }
 
 func (ls *LetStatement) statementNode() {
-
 }
 
 func (ls *LetStatement) TokenLiteral() string {
@@ -78,7 +77,6 @@ type Identifier struct {
 }
 
 func (i *Identifier) expressionNode() {
-
 }
 
 func (i *Identifier) TokenLiteral() string {
@@ -91,7 +89,6 @@ type ReturnStatement struct {
 }
 
 func (rs *ReturnStatement) statementNode() {
-
 }
 
 func (rs *ReturnStatement) TokenLiteral() string {
